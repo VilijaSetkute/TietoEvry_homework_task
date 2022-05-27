@@ -1,0 +1,40 @@
+.grow-1 {
+    flex: 1;
+}
+.grow-3 {
+    flex: 3;
+}
+
+.right-pane {
+    max-width: 370px;
+    border: 1px solid black;
+    padding: 20px;
+    margin: 0 20px;
+}
+.title-border {
+    border-bottom: 10px solid black;
+}
+.title-border-thin {
+    border-bottom: 3px solid black;
+}
+.card-text-14 {
+    font-size: 14px;
+}
+.text-details {
+    font-size: 10px;
+}
+
+ul li {
+    list-style: none;
+    margin-left: -20px;
+}
+
+.left-pane {
+    max-width: 600px;
+}
+.position-absolute__single-recipe {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    background-color: rgba(255,255,255,0.5);
+}

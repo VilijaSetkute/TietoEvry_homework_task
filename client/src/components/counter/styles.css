@@ -1,0 +1,62 @@
+.counter {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    max-width: 650px;
+    box-shadow: 0 0 10px grey;
+}
+
+.text-small {
+    font-size: 14px;
+    font-style: italic;
+}
+
+::placeholder {
+    font-size: 14px;
+    font-style: italic;
+    padding: 0 5px;
+}
+
+button {
+    width: fit-content;
+}
+
+.overflow-box {
+    max-width: 650px;
+    width: 90vw;
+    max-height: 600px;
+    overflow-y: auto;
+    margin: 0 auto;
+}
+
+.h30 {
+    min-height: 30px;
+}
+
+.fade-away {
+    animation: 5s linear fadeaway;
+}
+
+@keyframes fadeaway {
+    75% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.overflow-box::-webkit-scrollbar {
+    width: 5px;
+}
+.overflow-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+.overflow-box::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+.overflow-box::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

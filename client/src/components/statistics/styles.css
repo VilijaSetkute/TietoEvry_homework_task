@@ -1,0 +1,14 @@
+.w50px {
+    width: 100px;
+}
+
+.charts {
+    display: flex;
+}
+
+@media screen and (max-width: 475px) {
+    .charts {
+        display: flex;
+        flex-direction: column;
+    }
+}

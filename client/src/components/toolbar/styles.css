@@ -1,0 +1,56 @@
+.toolbar-desktop {
+    display: block;
+}
+.toolbar-mobile {
+    display: none;
+}
+
+.toolbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.menu-item {
+    color: white;
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.animate-icon {
+    animation: weight-icon 1s alternate infinite;
+}
+
+.position-absolute__menu {
+    left: 0;
+    top: 55px;
+    z-index: 99;
+}
+
+@keyframes weight-icon {
+    from {
+        transform: scale(1);
+        color: white;
+    }
+    to {
+        transform: scale(1.2);
+        color: #fd7e14;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .toolbar-desktop {
+        display: none;
+    }
+    .toolbar-mobile {
+        display: block;
+    }
+    .border-bottom {
+        border-bottom: 1px solid rgb(127, 178, 255);
+    }
+}

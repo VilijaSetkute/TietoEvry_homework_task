@@ -1,0 +1,93 @@
+.recipe-card {
+    width: 320px;
+    padding: 10px;
+    margin: 20px;
+    border: 1px solid lightgrey;
+}
+
+.recipe-card-title-wrap {
+    text-overflow: ellipsis;
+    max-width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.position-absolute {
+    top: 0;
+    right: 0;
+}
+
+.red {
+    color: red;
+}
+
+.recipe-card__horizontal {
+    width: 100%;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid lightgrey;
+}
+
+.recipe-card__horizontal img {
+    width: 100px;
+    height: 100px;
+}
+
+.rotate270 {
+    transform: rotate(270deg);
+}
+
+.rotate180 {
+    transform: rotate(180deg);
+}
+
+.rotate45 {
+    transform: rotate(45deg);
+}
+
+.tooltip-text {
+    font-size: 12px;
+}
+
+.card-data {
+    display: flex;
+    flex-direction: row;
+}
+.block-margin {
+    margin: 0 1rem;
+}
+
+.progress-bar-width {
+    width: 200px;
+}
+.progress-name-width {
+    width: 110px;
+}
+.info-block-width {
+    width: 300px;
+}
+
+.position-absolute__card {
+    left: 0;
+    top: 50%;
+    transform: translate(50%, -50%);
+    width: 100px;
+}
+
+@media screen and (max-width: 992px) {
+    .card-data {
+        flex-direction: column;
+    }
+    .block-margin {
+        margin: 1rem 0 0 0;
+    }
+}
+
+@media screen and (max-width: 475px) {
+    .progress-bar-width {
+        width: 150px;
+    }
+    .progress-name-width {
+        width: 110px;
+    }
+}

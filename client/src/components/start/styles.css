@@ -1,0 +1,34 @@
+.search {
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid lightgrey;
+    border-radius: 10px;
+    width: 650px;
+    box-shadow: 0 0 10px grey;
+}
+
+.search input[type=text] {
+    border-top: 1px solid #fd7e14;
+    border-bottom: 1px solid #fd7e14;
+    border-right: 1px solid #fd7e14;
+    height: 33px;
+    box-sizing: border-box
+}
+
+.search .input-merged {
+    border-left: none;
+}
+
+.search .input-unmerged {
+    border-left: 1px solid #fd7e14;
+}
+
+.search input[type=text]:focus {
+    outline: none;
+}
+
+@media screen and (max-width: 576px) {
+    .search {
+        width: 90vw;
+    }
+}

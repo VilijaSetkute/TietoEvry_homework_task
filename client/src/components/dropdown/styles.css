@@ -1,0 +1,48 @@
+.paddTop-10{
+    padding-top:10px;
+}
+
+.option {
+    padding: 3px 8px;
+}
+.mainColor {
+    background-color: #fd7e14;
+    color: white;
+    transition: 0.2s;
+}
+
+hr {
+    margin: 5px;
+}
+
+.option:hover {
+    background-color: #fd7e14;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.optionSet {
+    z-index: 1;
+    width: 100%;
+    background-color: white;
+    margin-top: 35px;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #fd7e14;
+}
+
+.selection {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 2px;
+    border: 1px solid #fd7e14;
+    cursor: pointer;
+}
+
+.selection:hover {
+    background-color: #fd7e14;
+    color: white;
+    border-radius: 2px;
+}
