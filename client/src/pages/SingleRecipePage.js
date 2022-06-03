@@ -1,12 +1,12 @@
 import React from 'react';
-import SingleRecipe from "../components/singleRecipe/SingleRecipe";
+import SingleRecipe from '../components/singleRecipe/SingleRecipe';
 
-const SingleRecipePage = () => {
-    return (
-        <div>
-            <SingleRecipe/>
-        </div>
-    );
-};
+function SingleRecipePage() {
+  return (
+    <div className="container">
+      <SingleRecipe />
+    </div>
+  );
+}
 
 export default SingleRecipePage;

@@ -9,8 +9,10 @@ import StatisticsPage from './pages/StatisticsPage';
 import SingleRecipePage from './pages/SingleRecipePage';
 import mainContext from './context/mainContext';
 import http from './plugins/http';
+import AuthorisationPage from './pages/AuthorisationPage';
 
 function App() {
+  const [user, setUser] = useState(null);
   const [weightLogs, setWeightLogs] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [dishType, setDishType] = useState('Select dish type');
@@ -22,6 +24,8 @@ function App() {
   const [searchMessage, setSearchMessage] = useState('');
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchError, setSearchError] = useState('');
+  const [authStatus, setAuthStatus] = useState(false);
+  const [authOption, setAuthOption] = useState('login');
 
   useEffect(() => {
     async function initialRecipes() {
@@ -31,6 +35,19 @@ function App() {
       }
     }
     initialRecipes();
+  }, []);
+
+  useEffect(() => {
+    async function checkLogStatus() {
+      const saved = localStorage.getItem('stayLoggedIn');
+      if (saved && saved === 'true') {
+        const data = await http.get('/stayLoggedIn');
+        if (data.success) {
+          setUser(data.user);
+        }
+      }
+    }
+    checkLogStatus();
   }, []);
 
   return (
@@ -57,6 +74,12 @@ function App() {
       setSearchKeyword,
       searchError,
       setSearchError,
+      user,
+      setUser,
+      authStatus,
+      setAuthStatus,
+      authOption,
+      setAuthOption,
     }}
     >
       <div className="App">
@@ -68,6 +91,7 @@ function App() {
             <Route path="/favorites" element={<FavoritesPage />} />
             <Route path="/statistics" element={<StatisticsPage />} />
             <Route path="/recipe/:rid" element={<SingleRecipePage />} />
+            <Route path="/auth" element={<AuthorisationPage />} />
           </Routes>
         </Router>
       </div>

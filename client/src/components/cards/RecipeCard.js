@@ -75,14 +75,15 @@ function RecipeCard({ id, recipe }) {
           className="pointer"
           src={recipe.recipe.images.SMALL.url}
           alt={recipe.recipe.label}
-          onClick={navigateRecipe}
+          onClick={() => navigateRecipe()}
+          aria-hidden="true"
         />
         <div className="position-absolute d-flex flex-column">
           <div className="position-relative">
             <FontAwesomeIcon
               className={`${toggleFavorites ? 'red' : 'text-dark'} pointer fs-4 m-1 p-2 rounded-circle`}
               icon={faHeart}
-              onClick={handleFavorites}
+              onClick={() => handleFavorites()}
               onMouseOver={() => setTooltipFavorites(true)}
               onMouseOut={() => setTooltipFavorites(false)}
             />
@@ -104,7 +105,7 @@ function RecipeCard({ id, recipe }) {
             <FontAwesomeIcon
               className={`${toggleMealPlan ? 'text-success' : 'text-dark'} pointer fs-4 m-1 p-2 rounded-circle`}
               icon={faUtensils}
-              onClick={handleMealPLan}
+              onClick={() => handleMealPLan()}
               onMouseOver={() => setTooltipPlan(true)}
               onMouseOut={() => setTooltipPlan(false)}
             />

@@ -87,7 +87,7 @@ function Search() {
     <div className="container search">
       <div className="d-flex justify-content-between mb-3">
         <div className="fw-bold fs-5 text-center p-2">Search by ingredient, meal, dish types</div>
-        <FontAwesomeIcon icon={faClose} className="text-danger pointer" onClick={handleClose} />
+        <FontAwesomeIcon icon={faClose} className="text-danger pointer" onClick={() => handleClose()} />
       </div>
       {searchMessage && <div className="text-success text-center mb-3 fw-bold">{searchMessage}</div>}
       {searchError && <div className="text-danger text-center mb-3 fw-bold">{searchError}</div>}
