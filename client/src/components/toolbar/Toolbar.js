@@ -75,11 +75,13 @@ function Toolbar() {
             <div className="d-flex align-items-center">
               <div className="mx-1">
                 BMI:
+                {' '}
                 {weightLogs.length > 0 ? weightLogs[weightLogs.length - 1].bmi : '--'}
               </div>
               <div className="fs-4">|</div>
               <div className="mx-1">
                 Calories needed:
+                {' '}
                 {weightLogs.length > 0 ? weightLogs[weightLogs.length - 1].totalBmr : '--'}
                 {' '}
                 kcal
