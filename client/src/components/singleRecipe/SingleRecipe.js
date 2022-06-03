@@ -22,7 +22,7 @@ function SingleRecipe() {
         ? <div>Loading...</div>
         : (
           <div>
-            <div className="container d-flex my-5 justify-content-center">
+            <div className="container my-5 view-layout">
               <div className="left-pane">
                 <div className="position-relative">
                   <img src={recipe.images.LARGE.url} alt="recipe" />
@@ -32,14 +32,14 @@ function SingleRecipe() {
                     {recipe.label}
                   </div>
                 </div>
-                <div className="my-3">
+                <div className="recipe-info my-3">
                   <div>
                     <div className="fw-bold fs-5">Cuisine</div>
-                    <ul>{recipe.cuisineType.map((x, i) => <li key={i} className="text-capitalize">{x}</li>)}</ul>
+                    <ul>{recipe.cuisineType.map((x, i) => <li key={x} className="text-capitalize">{x}</li>)}</ul>
                   </div>
                   <div>
                     <div className="fw-bold fs-5">Ingredients</div>
-                    <ul>{recipe.ingredientLines.map((x, i) => <li key={i} className="">{x}</li>)}</ul>
+                    <ul>{recipe.ingredientLines.map((x, i) => <li key={x} className="">{x}</li>)}</ul>
                   </div>
                   <div>
                     <div className="fw-bold fs-5">Source</div>

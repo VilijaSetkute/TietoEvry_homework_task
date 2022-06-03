@@ -8,7 +8,7 @@ import http from '../../plugins/http';
 function Start() {
   const {
     recipes, showSearch, weightLogs, setRecipes, searchKeyword,
-    mealType, dishType, setSearchMessage, setSearchError,
+    mealType, dishType, setSearchMessage, setSearchError, user,
   } = useContext(mainContext);
   async function getRecipes() {
     if (searchKeyword.length === 0) {
@@ -37,10 +37,13 @@ function Start() {
 
   return (
     <div>
-      <div className="d-flex justify-content-center mt-4 fs-4 fw-bold text-center">
+      <div
+        className="d-flex justify-content-center fw-bold fs-4 mb-2 mt-5 bg-success
+        bg-opacity-25 rounded py-2 text-center"
+      >
         Vegetarian meals from all over the world
       </div>
-      {weightLogs.length === 0
+      {(user && weightLogs.length === 0)
                 && (
                 <div className="fs-5 text-danger d-flex flex-column justify-content-center align-items-center m-3">
                   <div className="text-center">
@@ -61,7 +64,7 @@ function Start() {
             </div>
             )}
       <div className="d-flex flex-wrap justify-content-center">
-        {recipes.map((x, i) => <RecipeCard key={i} id={x.recipe.uri} recipe={x} />)}
+        {recipes.map((x, i) => <RecipeCard key={x.recipe.uri} id={x.recipe.uri} recipe={x} />)}
       </div>
       <div className="d-flex justify-content-center mb-5">
         {recipes.length === 20

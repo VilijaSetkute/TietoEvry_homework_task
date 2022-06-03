@@ -13,25 +13,32 @@ function CalorieLogList({ log }) {
   }
 
   return (
-    <div className="text-small">
-      <div>{timePassed(log.timestamp)}</div>
-      <div className={log.color}>
-        Body mass index -
-        {log.bmi}
-        .
-        {log.bmiEval}
+    <div>
+      <div className="d-flex">
+        <div className={`log-circle fs-5 me-3 ${log.color}`}>
+          {Math.round(log.bmi)}
+        </div>
+        <div className="text-small">
+          <div>{timePassed(log.timestamp)}</div>
+          <div className={log.color}>
+            {log.bmiEval}
+            . Your BMI -
+            {log.bmi}
+          </div>
+          <div>
+            Basal metabolic rate -
+            {log.bmr}
+            {' '}
+            kcal. Total energy expenditure -
+            {log.totalBmr}
+            {' '}
+            kcal
+          </div>
+        </div>
       </div>
-      <div>
-        Basal metabolic rate -
-        {log.bmr}
-        {' '}
-        kcal. Total energy expenditure -
-        {log.totalBmr}
-        {' '}
-        kcal
-      </div>
-      <hr />
+      <hr className="my-4" />
     </div>
+
   );
 }
 

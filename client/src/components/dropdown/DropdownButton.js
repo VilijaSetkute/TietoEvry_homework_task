@@ -25,12 +25,24 @@ function DropdownButton({ list, getter, setter }) {
         <div
           className={`${getToggle && 'mainColor'} selection d-flex justify-content-between align-items-center`}
           onClick={() => setToggle(!getToggle)}
+          role="button"
+          aria-hidden="true"
         >
           <div>{getter}</div>
         </div>
         {getToggle && (
           <div className="optionSet position-absolute">
-            {list.map((x, i) => <div key={i} className="option" onClick={() => selectOption(x)}>{x}</div>)}
+            {list.map((x, i) => (
+              <div
+                key={x}
+                className="option"
+                onClick={() => selectOption(x)}
+                role="button"
+                aria-hidden="true"
+              >
+                {x}
+              </div>
+            ))}
           </div>
         )}
       </div>

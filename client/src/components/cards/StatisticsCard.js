@@ -83,7 +83,7 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
             <FontAwesomeIcon
               className={`${toggleFavorites ? 'red' : 'text-dark'} pointer fs-4 m-1 p-2 rounded-circle`}
               icon={faHeart}
-              onClick={handleFavorites}
+              onClick={() => handleFavorites()}
               onMouseOver={() => setTooltipFavorites(true)}
               onMouseOut={() => setTooltipFavorites(false)}
             />
@@ -105,7 +105,7 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
               className={`${recipe.recipe.quarter > 0 ? 'text-success opacity-25' : 'text-success pointer'} 
               fs-4 m-1 p-2 rounded-circle`}
               icon={faUtensils}
-              onClick={handleMealPLan}
+              onClick={() => handleMealPLan()}
               onMouseOver={() => setTooltipPlan(true)}
               onMouseOut={() => setTooltipPlan(false)}
             />
@@ -222,6 +222,8 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
             <div
               className={`position-relative ${recipe.recipe.quarter > 0 ? 'text-success' : 'undefined'}`}
               onClick={() => mealQuarter(1)}
+              role="button"
+              aria-hidden="true"
             >
               <FontAwesomeIcon icon={faCircleHalfStroke} className="pointer fs-3 m-2 bg-white rotate180" />
               <FontAwesomeIcon
@@ -241,6 +243,8 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
             <div
               className={`position-relative ${recipe.recipe.quarter > 2 ? 'text-success' : 'undefined'}`}
               onClick={() => mealQuarter(3)}
+              role="button"
+              aria-hidden="true"
             >
               <FontAwesomeIcon icon={faCircleHalfStroke} className="pointer fs-3 m-2 rotate180" />
               <FontAwesomeIcon icon={faCircleHalfStroke} className="pointer position-absolute fs-3 m-2 rotate270" />
