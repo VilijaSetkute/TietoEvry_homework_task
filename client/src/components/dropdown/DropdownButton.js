@@ -32,15 +32,15 @@ function DropdownButton({ list, getter, setter }) {
         </div>
         {getToggle && (
           <div className="optionSet position-absolute">
-            {list.map((x, i) => (
+            {list.map((el) => (
               <div
-                key={x}
+                key={el}
                 className="option"
-                onClick={() => selectOption(x)}
+                onClick={() => selectOption(el)}
                 role="button"
                 aria-hidden="true"
               >
-                {x}
+                {el}
               </div>
             ))}
           </div>

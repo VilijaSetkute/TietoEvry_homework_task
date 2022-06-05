@@ -205,7 +205,7 @@ function Statistics() {
               {planned.filter((el) => el.recipe.quarter > 0).length > 0
                 ? (
                   <div>
-                    {planned.flatMap((el, i) => (el.recipe.quarter > 0)
+                    {planned.flatMap((el) => (el.recipe.quarter > 0)
                     && (
                       <StatisticsCard
                         key={el['_id']}
@@ -229,7 +229,7 @@ function Statistics() {
               {planned.filter((el) => el.recipe.quarter === 0).length > 0
                 ? (
                   <div>
-                    {planned.flatMap((el, i) => (el.recipe.quarter === 0)
+                    {planned.flatMap((el) => (el.recipe.quarter === 0)
                     && (
                       <StatisticsCard
                         key={el['_id']}

@@ -29,7 +29,7 @@ function Login({ setAuthMessage, authMessage }) {
   }
 
   return (
-    <div className="auth-card bg-success rounded p-3 m-3">
+    <form className="auth-card bg-success rounded p-3 m-3">
       <div className="text-center mb-3 text-white fs-5 fw-bold">Login</div>
       {authMessage && <div className="my-2 text-warning text-center">{authMessage.message}</div>}
       <div className="d-flex flex-column justify-content-center">
@@ -43,6 +43,7 @@ function Login({ setAuthMessage, authMessage }) {
           ref={logPass}
           className="my-1 rounded-pill border-0 p-2 text-center"
           type="password"
+          autoComplete="off"
           placeholder="enter password"
         />
         <div className="d-flex align-items-center justify-content-center my-2">
@@ -58,7 +59,7 @@ function Login({ setAuthMessage, authMessage }) {
           Login
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 
