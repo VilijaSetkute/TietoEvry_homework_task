@@ -1,5 +1,4 @@
 const weightLogSchema = require('../models/weightLogSchema')
-const pla = require('../models/weightLogSchema')
 
 module.exports = {
     weightLogController: async (req, res) => {

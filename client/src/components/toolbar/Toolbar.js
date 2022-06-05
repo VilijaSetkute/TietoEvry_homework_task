@@ -183,7 +183,7 @@ function Toolbar() {
               </div>
               <div
                 className="py-1 d-flex justify-content-end pointer"
-                onClick={() => handleMenuBar('/calculator')}
+                onClick={() => logOut()}
                 role="button"
                 aria-hidden="true"
               >
