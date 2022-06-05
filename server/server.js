@@ -8,6 +8,8 @@ const MongoStore = require("connect-mongo");
 require("dotenv").config();
 const http = require("http");
 const server = http.createServer(app);
+const bodyParser = require("body-parser")
+
 
 mongoose.connect(process.env.MONGO_KEY).then((res) => {
     console.log("Successfully connected to Mongo DB");
@@ -43,6 +45,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors({origin: process.env.CORS_ORIGIN, credentials: true}));
 app.use(express.json());
 app.use("/", mainRoute);

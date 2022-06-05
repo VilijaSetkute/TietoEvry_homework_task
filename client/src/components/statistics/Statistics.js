@@ -8,7 +8,7 @@ import http from '../../plugins/http';
 
 function Statistics() {
   const {
-    planned, weightLogs, setAuthOption, user,
+    planned, setPlanned, weightLogs, setAuthOption, user,
   } = useContext(mainContext);
   const [calsStatistics, setCalsStatistics] = useState({
     total: {
@@ -28,7 +28,7 @@ function Statistics() {
   const nav = useNavigate();
 
   async function tableCalculation() {
-    const data = await http.post('/calorie-table', { planned, weightLogs });
+    const data = await http.post('/calorie-table', { user });
     if (data.success) {
       setCalsStatistics(data.statistics);
     }
@@ -41,6 +41,16 @@ function Statistics() {
 
   useEffect(() => {
     tableCalculation();
+  }, [planned]);
+
+  useEffect(() => {
+    async function userPlanned() {
+      const data = await http.post('/user-planned', { user });
+      if (data.success) {
+        setPlanned(data.planned);
+      }
+    }
+    userPlanned();
   }, []);
 
   return (
@@ -198,8 +208,8 @@ function Statistics() {
                     {planned.flatMap((el, i) => (el.recipe.quarter > 0)
                     && (
                       <StatisticsCard
-                        key={i}
-                        id={el.recipe.uri}
+                        key={el['_id']}
+                        id={el['_id']}
                         recipe={el}
                         setCalsStatistics={setCalsStatistics}
                       />
@@ -222,8 +232,8 @@ function Statistics() {
                     {planned.flatMap((el, i) => (el.recipe.quarter === 0)
                     && (
                       <StatisticsCard
-                        key={i}
-                        id={el.recipe.uri}
+                        key={el['_id']}
+                        id={el['_id']}
                         recipe={el}
                         setCalsStatistics={setCalsStatistics}
                       />

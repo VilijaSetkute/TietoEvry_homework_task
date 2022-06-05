@@ -23,6 +23,7 @@ function CalorieCounter() {
 
   async function calculateMetrics() {
     const metrics = {
+      user,
       weight: Number(weightRef.current.value),
       height: Number(heightRef.current.value),
       age: Number(ageRef.current.value),
@@ -31,7 +32,7 @@ function CalorieCounter() {
     };
     const data = await http.post('/metrics', metrics);
     if (data.success) {
-      setWeightLogs([...weightLogs, data.results]);
+      setWeightLogs(data.results);
       setLogMessage(data.message);
       setErrorMessage('');
       setShowCalculator(false);
@@ -59,6 +60,16 @@ function CalorieCounter() {
       setShowCalculator(false);
     }
   }, [weightLogs]);
+
+  useEffect(() => {
+    async function getLogs() {
+      const data = await http.post('/all-weight-logs', { user });
+      if (data.success) {
+        setWeightLogs(data.results);
+      }
+    }
+    getLogs();
+  }, []);
 
   return (
     <div>
@@ -185,7 +196,7 @@ function CalorieCounter() {
             </div>
             <div className="mb-4 text-center fw-bold fs-5">Your weight log history</div>
             <div className="overflow-box">
-              {weightLogs.map((x, i) => <CalorieLogList key={x.timestamp} log={x} />)
+              {weightLogs.map((x, i) => <CalorieLogList key={x['_id']} log={x} />)
                 .reverse()}
             </div>
           </div>
