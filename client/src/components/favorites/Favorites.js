@@ -53,7 +53,7 @@ function Favorites() {
                     Favorite meals
                   </div>
                   <div className="d-flex flex-wrap justify-content-center">
-                    {favorites.map((x) => <RecipeCard key={x.recipe.uri} id={x.recipe.uri} recipe={x} />)}
+                    {favorites.map((el) => <RecipeCard key={el.recipe.uri} id={el.recipe.uri} recipe={el} />)}
                   </div>
                 </div>
               )

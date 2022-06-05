@@ -44,11 +44,11 @@ function SingleRecipe() {
                 <div className="recipe-info my-3">
                   <div>
                     <div className="fw-bold fs-5">Cuisine</div>
-                    <ul>{recipe.recipe.cuisineType.map((x, i) => <li key={x} className="text-capitalize">{x}</li>)}</ul>
+                    <ul>{recipe.recipe.cuisineType.map((el) => <li key={el} className="text-capitalize">{el}</li>)}</ul>
                   </div>
                   <div>
                     <div className="fw-bold fs-5">Ingredients</div>
-                    <ul>{recipe.recipe.ingredientLines.map((x, i) => <li key={x} className="">{x}</li>)}</ul>
+                    <ul>{recipe.recipe.ingredientLines.map((el) => <li key={el} className="">{el}</li>)}</ul>
                   </div>
                   <div>
                     <div className="fw-bold fs-5">Source</div>

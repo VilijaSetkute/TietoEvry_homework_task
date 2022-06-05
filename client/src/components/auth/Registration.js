@@ -23,7 +23,7 @@ function Registration({ setAuthMessage, authMessage }) {
   }
 
   return (
-    <div className="auth-card bg-success rounded p-3 m-3">
+    <form className="auth-card bg-success rounded p-3 m-3">
       <div className="text-center mb-3 text-white fs-5 fw-bold">Registration</div>
       {authMessage && <div className="my-2 text-warning text-center">{authMessage.message}</div>}
       <div className="d-flex flex-column justify-content-center">
@@ -37,12 +37,14 @@ function Registration({ setAuthMessage, authMessage }) {
           ref={regPass}
           className="my-1 rounded-pill border-0 p-2 text-center"
           type="password"
+          autoComplete="off"
           placeholder="enter password"
         />
         <input
           ref={regPassRepeat}
           className="my-1 rounded-pill border-0 p-2 text-center"
           type="password"
+          autoComplete="off"
           placeholder="repeat password"
         />
         <button
@@ -54,7 +56,7 @@ function Registration({ setAuthMessage, authMessage }) {
           Register
         </button>
       </div>
-    </div>
+    </form>
   );
 }
 

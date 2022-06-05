@@ -196,7 +196,7 @@ function CalorieCounter() {
             </div>
             <div className="mb-4 text-center fw-bold fs-5">Your weight log history</div>
             <div className="overflow-box">
-              {weightLogs.map((x, i) => <CalorieLogList key={x['_id']} log={x} />)
+              {weightLogs.map((el) => <CalorieLogList key={el['_id']} log={el} />)
                 .reverse()}
             </div>
           </div>

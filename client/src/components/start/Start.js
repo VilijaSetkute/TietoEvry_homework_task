@@ -64,7 +64,7 @@ function Start() {
             </div>
             )}
       <div className="d-flex flex-wrap justify-content-center">
-        {recipes.map((x, i) => <RecipeCard key={x.recipe.uri} id={x.recipe.uri} recipe={x} />)}
+        {recipes.map((el) => <RecipeCard key={el.recipe.uri} id={el.recipe.uri} recipe={el} />)}
       </div>
       <div className="d-flex justify-content-center mb-5">
         {recipes.length === 20
