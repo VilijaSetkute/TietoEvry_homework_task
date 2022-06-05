@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import mainContext from '../../context/mainContext';
+import http from '../../plugins/http';
 
 function RecipeCard({ id, recipe }) {
   const {
-    favorites, setFavorites, planned, setPlanned,
+    favorites, setFavorites, planned, setPlanned, user,
   } = useContext(mainContext);
   const [nutrition, setNutrition] = useState({ fats: 0, carbs: 0, proteins: 0 });
   const [toggleFavorites, setToggleFavorites] = useState(false);
@@ -17,16 +18,32 @@ function RecipeCard({ id, recipe }) {
   const nav = useNavigate();
 
   useEffect(() => {
-    if (favorites.includes(recipe)) {
-      setToggleFavorites(true);
+    async function userFavorites() {
+      const data = await http.post('/user-favorites', { user });
+      if (data.success) {
+        setFavorites(data.favorites);
+        const isFavorite = favorites.filter((el) => el.recipe.uri === id);
+        if (isFavorite.length > 0) {
+          setToggleFavorites(true);
+        }
+      }
     }
-  }, [favorites]);
+    userFavorites();
+  }, []);
 
   useEffect(() => {
-    if (planned.includes(recipe)) {
-      setToggleMealPlan(true);
+    async function userPlanned() {
+      const data = await http.post('/user-planned', { user });
+      if (data.success) {
+        setPlanned(data.planned);
+        const isPlanned = planned.filter((el) => el.recipe.uri === id);
+        if (isPlanned.length > 0) {
+          setToggleMealPlan(true);
+        }
+      }
     }
-  }, [planned]);
+    userPlanned();
+  }, []);
 
   useEffect(() => {
     function nutritionCalc() {
@@ -41,24 +58,26 @@ function RecipeCard({ id, recipe }) {
     nutritionCalc();
   }, []);
 
-  function handleFavorites() {
-    if (!toggleFavorites) {
-      setFavorites([...favorites, recipe]);
-    } else {
-      const filtered = favorites.filter((el) => el.recipe.uri !== id);
-      setFavorites(filtered);
+  async function handleFavorites() {
+    const checkInFav = {
+      user,
+      recipe: recipe.recipe,
+    };
+    const data = await http.post('/handle-favorites', checkInFav);
+    if (data.success) {
+      setFavorites(data.favorites);
     }
     setToggleFavorites(!toggleFavorites);
   }
 
-  function handleMealPLan() {
-    if (!toggleMealPlan) {
-      recipe.recipe.startTime = 0;
-      recipe.recipe.quarter = 0;
-      setPlanned([...planned, recipe]);
-    } else {
-      const filtered = planned.filter((el) => el.recipe.uri !== id);
-      setPlanned(filtered);
+  async function handleMealPLan() {
+    const checkInPlan = {
+      user,
+      recipe: recipe.recipe,
+    };
+    const data = await http.post('/handle-planned', checkInPlan);
+    if (data.success) {
+      setPlanned(data.planned);
     }
     setToggleMealPlan(!toggleMealPlan);
   }
@@ -78,6 +97,7 @@ function RecipeCard({ id, recipe }) {
           onClick={() => navigateRecipe()}
           aria-hidden="true"
         />
+        {user && (
         <div className="position-absolute d-flex flex-column">
           <div className="position-relative">
             <FontAwesomeIcon
@@ -88,17 +108,17 @@ function RecipeCard({ id, recipe }) {
               onMouseOut={() => setTooltipFavorites(false)}
             />
             {tooltipFavorites
-                        && (
-                        <div className="position-absolute bg-success p-1 rounded text-white text-center
+            && (
+              <div className="position-absolute bg-success p-1 rounded text-white text-center
                         tooltip-text position-absolute__card"
-                        >
-                          <span>
-                            {toggleFavorites ? 'Remove from' : 'Add to'}
-                            {' '}
-                            favorites
-                          </span>
-                        </div>
-                        )}
+              >
+                <span>
+                  {toggleFavorites ? 'Remove from' : 'Add to'}
+                  {' '}
+                  favorites
+                </span>
+              </div>
+            )}
           </div>
 
           <div className="position-relative">
@@ -110,19 +130,20 @@ function RecipeCard({ id, recipe }) {
               onMouseOut={() => setTooltipPlan(false)}
             />
             {tooltipPlan
-                        && (
-                        <div className="position-absolute bg-success p-1 rounded text-white text-center
+            && (
+              <div className="position-absolute bg-success p-1 rounded text-white text-center
                         tooltip-text position-absolute__card"
-                        >
-                          <span>
-                            {toggleMealPlan ? 'Remove from' : 'Add to'}
-                            {' '}
-                            plan
-                          </span>
-                        </div>
-                        )}
+              >
+                <span>
+                  {toggleMealPlan ? 'Remove from' : 'Add to'}
+                  {' '}
+                  plan
+                </span>
+              </div>
+            )}
           </div>
         </div>
+        )}
 
       </div>
 

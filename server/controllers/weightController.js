@@ -1,6 +1,9 @@
+const weightLogSchema = require('../models/weightLogSchema')
+const pla = require('../models/weightLogSchema')
+
 module.exports = {
-    weightLogController: (req, res) => {
-        const {weight, height, age, gender, activity} = req.body;
+    weightLogController: async (req, res) => {
+        const {weight, height, age, gender, activity, user} = req.body;
         let bmr = 0;
         let totalBmr = 0;
 
@@ -48,15 +51,25 @@ module.exports = {
             color = "text-danger";
         }
 
-        const results = {
+        const results = new weightLogSchema({
+            user,
             bmi,
             bmiEval,
             bmr: Math.ceil(bmr),
             totalBmr,
             color,
             timestamp: Date.now()
-        };
+        });
 
-        res.send({success: true, results, message: "Calculations completed successfully and added to your weight logs"});
+        await results.save()
+        const userWeightLogs = await weightLogSchema.find({user})
+        console.log(userWeightLogs);
+        res.send({success: true, results: userWeightLogs, message: "Calculations completed successfully and added to your weight logs"});
+    },
+    allUserWeightController: async (req, res) => {
+        const {user} = req.body
+        const userWeightLogs = await weightLogSchema.find({user})
+        console.log(userWeightLogs);
+        res.send({success: true, results: userWeightLogs});
     }
 };

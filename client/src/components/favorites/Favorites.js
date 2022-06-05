@@ -1,12 +1,25 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './styles.css';
 import { Link, useNavigate } from 'react-router-dom';
 import mainContext from '../../context/mainContext';
 import RecipeCard from '../cards/RecipeCard';
+import http from '../../plugins/http';
 
 function Favorites() {
-  const { favorites, user, setAuthOption } = useContext(mainContext);
+  const {
+    favorites, setFavorites, user, setAuthOption,
+  } = useContext(mainContext);
   const nav = useNavigate();
+
+  useEffect(() => {
+    async function userFavorites() {
+      const data = await http.post('/user-favorites', { user });
+      if (data.success) {
+        setFavorites(data.favorites);
+      }
+    }
+    userFavorites();
+  }, []);
 
   function logReg(option) {
     setAuthOption(option);

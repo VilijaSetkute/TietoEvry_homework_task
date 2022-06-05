@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
 import {
   faHeart, faUtensils, faCircle, faCircleHalfStroke, faCircleNotch,
 } from '@fortawesome/free-solid-svg-icons';
@@ -7,8 +8,9 @@ import mainContext from '../../context/mainContext';
 import http from '../../plugins/http';
 
 function StatisticsCard({ id, recipe, setCalsStatistics }) {
+  const nav = useNavigate();
   const {
-    favorites, setFavorites, planned, setPlanned, weightLogs,
+    favorites, setFavorites, planned, setPlanned, user,
   } = useContext(mainContext);
   const [nutrition, setNutrition] = useState({ fats: 0, carbs: 0, proteins: 0 });
   const [toggleFavorites, setToggleFavorites] = useState(false);
@@ -17,16 +19,32 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
   const [tooltipPlan, setTooltipPlan] = useState(false);
 
   useEffect(() => {
-    if (favorites.includes(recipe)) {
-      setToggleFavorites(true);
+    async function userFavorites() {
+      const data = await http.post('/user-favorites', { user });
+      if (data.success) {
+        setFavorites(data.favorites);
+        const isFavorite = favorites.filter((el) => el.recipe.uri === id);
+        if (isFavorite.length > 0) {
+          setToggleFavorites(true);
+        }
+      }
     }
-  }, [favorites]);
+    userFavorites();
+  }, []);
 
   useEffect(() => {
-    if (planned.includes(recipe)) {
-      setToggleMealPlan(true);
+    async function userPlanned() {
+      const data = await http.post('/user-planned', { user });
+      if (data.success) {
+        setPlanned(data.planned);
+        const isPlanned = planned.filter((el) => el.recipe.uri === id);
+        if (isPlanned.length > 0) {
+          setToggleMealPlan(true);
+        }
+      }
     }
-  }, [planned]);
+    userPlanned();
+  }, []);
 
   useEffect(() => {
     function nutritionCalc() {
@@ -41,43 +59,47 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
     nutritionCalc();
   }, []);
 
-  function handleFavorites() {
-    if (!toggleFavorites) {
-      setFavorites([...favorites, recipe]);
-    } else {
-      const filtered = favorites.filter((el) => el.recipe.uri !== id);
-      setFavorites(filtered);
+  async function handleFavorites() {
+    const checkInFav = {
+      user,
+      recipe: recipe.recipe,
+    };
+    const data = await http.post('/handle-favorites', checkInFav);
+    if (data.success) {
+      setFavorites(data.favorites);
     }
     setToggleFavorites(!toggleFavorites);
   }
 
-  function handleMealPLan() {
-    if (recipe.recipe.quarter === 0) {
-      if (!toggleMealPlan) {
-        setPlanned([...planned, recipe]);
-      } else {
-        const filtered = planned.filter((el) => el.recipe.uri !== id);
-        setPlanned(filtered);
-      }
-      setToggleMealPlan(!toggleMealPlan);
+  async function handleMealPLan() {
+    const checkInPlan = {
+      user,
+      recipe: recipe.recipe,
+    };
+    const data = await http.post('/handle-planned', checkInPlan);
+    if (data.success) {
+      setPlanned(data.planned);
     }
+    setToggleMealPlan(!toggleMealPlan);
   }
 
   async function mealQuarter(q) {
-    if (q > recipe.recipe.quarter) {
-      recipe.recipe.quarter = q;
-    }
-    setPlanned([...planned]);
-    const data = await http.post('/calorie-table', { planned, weightLogs });
+    const data = await http.post('/update-quarter', { user, id, quarter: q });
     if (data.success) {
-      setCalsStatistics(data.statistics);
+      setPlanned(data.planned);
     }
+  }
+
+  function navigateRecipe() {
+    const rid = recipe.recipe.uri.split('#');
+    nav(`/recipe/${rid[1]}`);
   }
 
   return (
     <div className="recipe-card__horizontal">
       <div className="d-flex justify-content-between">
         <div className="p-2 fs-5 fw-bold">{recipe.recipe.label}</div>
+        {user && (
         <div className="position-relative d-flex">
           <div className="position-relative">
             <FontAwesomeIcon
@@ -88,17 +110,17 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
               onMouseOut={() => setTooltipFavorites(false)}
             />
             {tooltipFavorites
-                        && (
-                        <div className="position-absolute bg-success p-1 rounded text-white text-center
+            && (
+              <div className="position-absolute bg-success p-1 rounded text-white text-center
                         tooltip-text position-absolute__card"
-                        >
-                          <span>
-                            {toggleFavorites ? 'Remove from' : 'Add to'}
-                            {' '}
-                            favorites
-                          </span>
-                        </div>
-                        )}
+              >
+                <span>
+                  {toggleFavorites ? 'Remove from' : 'Add to'}
+                  {' '}
+                  favorites
+                </span>
+              </div>
+            )}
           </div>
           <div className="position-relative">
             <FontAwesomeIcon
@@ -110,22 +132,29 @@ function StatisticsCard({ id, recipe, setCalsStatistics }) {
               onMouseOut={() => setTooltipPlan(false)}
             />
             {(tooltipPlan && recipe.recipe.quarter === 0)
-                        && (
-                        <div className="position-absolute bg-success p-1 rounded text-white text-center
+            && (
+              <div className="position-absolute bg-success p-1 rounded text-white text-center
                         tooltip-text position-absolute__card"
-                        >
-                          <span>
-                            {toggleMealPlan ? 'Remove from' : 'Add to'}
-                            {' '}
-                            plan
-                          </span>
-                        </div>
-                        )}
+              >
+                <span>
+                  {toggleMealPlan ? 'Remove from' : 'Add to'}
+                  {' '}
+                  plan
+                </span>
+              </div>
+            )}
           </div>
         </div>
+        )}
       </div>
       <div className="card-data">
-        <img src={recipe.recipe.images.THUMBNAIL.url} alt={recipe.recipe.label} />
+        <img
+          className="pointer"
+          src={recipe.recipe.images.THUMBNAIL.url}
+          alt={recipe.recipe.label}
+          onClick={navigateRecipe}
+          aria-hidden="true"
+        />
         <div className="block-margin info-block-width">
           <div>
             <span className="fw-bold">Category:</span>
